@@ -1,7 +1,10 @@
 import './Square.css';
 
 const Square = () => {
-  return <div>Square</div>;
+  return (
+    <button className="square" onClick={() => alert('hello')}>
+      X
+    </button>
+  );
 };
-
 export default Square;
