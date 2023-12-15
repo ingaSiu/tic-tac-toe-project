@@ -1,9 +1,14 @@
 import './Square.css';
 
-const Square = () => {
+type SquareProps = {
+  value: string | null;
+  onSquareClick: () => void;
+};
+
+const Square = ({ value, onSquareClick }: SquareProps) => {
   return (
-    <button className="square" onClick={() => alert('hello')}>
-      X
+    <button className="square" onClick={onSquareClick}>
+      {value}
     </button>
   );
 };
