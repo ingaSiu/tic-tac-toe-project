@@ -11,7 +11,7 @@ type BoardProps = {
 
 const Board = ({ xIsNext, squares, onPlay }: BoardProps) => {
   const handleClick = (i: number) => {
-    if (squares[i]) {
+    if (squares[i] || calculateWinner(squares)) {
       return;
     }
 
@@ -49,9 +49,15 @@ const Board = ({ xIsNext, squares, onPlay }: BoardProps) => {
         <div key={rowIndex} className="boardRow">
           {boardRows.map((col, colIndex) => {
             const squareIndex = rowIndex * boardSize + colIndex;
+            const isWinningSquare = winningLine && winningLine.includes(squareIndex);
 
             return (
-              <Square key={squareIndex} value={squares[squareIndex]} onSquareClick={() => handleClick(squareIndex)} />
+              <Square
+                key={squareIndex}
+                value={squares[squareIndex]}
+                onSquareClick={() => handleClick(squareIndex)}
+                isWinning={isWinningSquare}
+              />
             );
           })}
         </div>
