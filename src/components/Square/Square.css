@@ -14,3 +14,7 @@
   color: darkblue;
   cursor: pointer;
 }
+
+.winning {
+  border: 0.5rem solid gold;
+}
