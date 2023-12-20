@@ -10,19 +10,41 @@ type BoardProps = {
 };
 
 const Board = ({ xIsNext, squares, onPlay }: BoardProps) => {
+  const getRandomInt = (min: number, max: number) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
   const handleClick = (i: number) => {
-    if (squares[i] || calculateWinner(squares)) {
+    console.log(i);
+    makeMove(squares, i, false);
+  };
+
+  const makeMove = (moveSquares: string[], i: number, isAiMove: boolean) => {
+    console.log('move squares');
+    console.log(moveSquares);
+    if (moveSquares[i] || calculateWinner(moveSquares)) {
       return;
     }
 
-    const nextSquares = squares.slice();
+    const nextSquares = moveSquares.slice();
 
-    if (xIsNext) {
-      nextSquares[i] = 'X';
-    } else {
-      nextSquares[i] = 'O';
+    nextSquares[i] = xIsNext ? 'X' : 'O';
+
+    console.log(isAiMove);
+    if (!isAiMove) {
+      const availableSquares = moveSquares
+        .map((square, index) => {
+          return square !== null ? index : null;
+        })
+        .filter((square) => square !== null);
+
+      const availableIndex = getRandomInt(0, availableSquares.length - 1);
+      console.log(nextSquares);
+      makeMove(nextSquares, Number(availableSquares[availableIndex]), true);
     }
-
+    console.log(nextSquares);
     onPlay(nextSquares);
   };
   const isBoardFull = squares.every((square) => square !== null);
